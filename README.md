@@ -13,4 +13,4 @@ Run the following command
 
 	npm run
 
-Then connect to http://127.0.0.1:8000/ .
+Then connect to http://localhost:8000/ .
