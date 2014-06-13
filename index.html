@@ -1,33 +1,39 @@
 <!doctype html>
 <html lang="en" ng-app="FanPageReader">
-<head>
-  <meta charset="utf-8">
-  <title>My HTML File</title>
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="/style/app.css">
-  <script src="/bower_components/angular/angular.js"></script>
-  <script src="/bower_components/angular-facebook/lib/angular-facebook.js"></script>
-  <script src="/js/app.js"></script>
-</head>
-<body ng-controller="readerCtrl">
-  <div>
-
-<input type="text" ng-model="fanpageURL">
-
-<input type="submit" value="Submit" ng-click="load()">
-  
-  
-  </div>
-  <div class="col-md-2">
-        Search: <input ng-model="query">
-  </div>
-  <div class="col-md-10">
-  <ul>
-    <li ng-repeat="post in posts | filter: { message:query }:strict">
-      {{post.message}}
-      <a href="https://www.facebook.com/{{post.id}}">原文</a>
-    </li>
-  </ul>
-  </div>
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>Facebook Anonymous Board Searcher (FABS)</title>
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="/style/app.css">
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/bower_components/angular-facebook/lib/angular-facebook.js"></script>
+        <script src="/js/app.js"></script>
+    </head>
+    <body ng-controller="readerCtrl">
+        <div class="container">
+            <div class="page-header">
+                <h1>Facebook Anonymous Board Searcher (FABS)</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <h5>Search board:</h5>
+                    <input type="text" ng-model="fanpageURL">
+                    <input type="submit" value="Submit" ng-click="load()">
+                    <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
+                    <h5>Search content:</h5>
+                    <input ng-model="query">
+                </div>
+                <div class="col-md-10">
+                    <table class="table table-striped">
+                        <tr ng-repeat="post in posts | filter: { message:query }:strict">
+                            <td>
+                                {{post.message}} | 
+                                <a href="https://www.facebook.com/{{post.id}}">原文</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
