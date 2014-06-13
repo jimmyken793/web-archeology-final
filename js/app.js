@@ -1,4 +1,4 @@
-var app = angular.module('FanPageReader', ['facebook']); // inject facebook module
+var app = angular.module('FanPageReader', ['facebook', 'ngStorage']); // inject facebook module
 
 app.config(['FacebookProvider',
     function(FacebookProvider) {
@@ -6,8 +6,8 @@ app.config(['FacebookProvider',
     }
 ])
 
-app.controller('readerCtrl', ['$scope', 'Facebook',
-    function($scope, Facebook) {
+app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage',
+    function($scope, Facebook, $localStorage) {
         // Here, usually you should watch for when Facebook is ready and loaded
         $scope.$watch(function() {
             return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
