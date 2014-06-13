@@ -34,7 +34,8 @@ app.controller('readerCtrl', ['$scope', 'Facebook',
         };
         $scope.load = function(addr) {
             if (!addr) {
-                addr = '/NTUHATE/feed?limit=30';
+                console.log($scope.fanpageURL)
+                addr = $scope.fanpageURL + '/feed?limit=30';
                 $scope.posts = [];
                 console.log("init posts");
             }
