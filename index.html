@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="/style/app.css">
         <script src="/bower_components/angular/angular.js"></script>
+        <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="/bower_components/angular-facebook/lib/angular-facebook.js"></script>
         <script src="/js/app.js"></script>
         <script src="/bower_components/ngstorage/ngStorage.js"></script>
@@ -17,18 +18,18 @@
             </div>
             <div class="row">
                 <div class="col-md-2">
-                    <h5>Search board:</h5>
+                    <h5>看板ID：</h5>
                     <input type="text" ng-model="fanpageURL">
-                    <input type="submit" value="Submit" ng-click="load()">
+                    <input type="submit" value="載入" ng-click="load()">
                     <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
-                    <h5>Search content:</h5>
+                    <h5>搜尋：</h5>
                     <input ng-model="query">
                 </div>
                 <div class="col-md-10">
                     <table class="table table-striped">
                         <tr ng-repeat="post in posts | filter: { message:query }:strict">
+                            <td ng-bind-html="post.message | nl2br"></td>
                             <td>
-                                {{post.message}} | 
                                 <a href="https://www.facebook.com/{{post.id}}">原文</a>
                             </td>
                         </tr>

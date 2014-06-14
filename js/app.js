@@ -1,4 +1,4 @@
-var app = angular.module('FanPageReader', ['facebook', 'ngStorage']); // inject facebook module
+var app = angular.module('FanPageReader', ['facebook', 'ngStorage', 'ngSanitize']); // inject facebook module
 
 app.config(['FacebookProvider',
     function(FacebookProvider) {
@@ -6,8 +6,15 @@ app.config(['FacebookProvider',
     }
 ])
 
-app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage',
-    function($scope, Facebook, $localStorage) {
+app.filter("nl2br", function($filter) {
+    return function(data) {
+        if (!data) return data;
+        return data.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n\r?/g, '<br />');
+    };
+});
+
+app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize',
+    function($scope, Facebook, $localStorage, $sanitize) {
         // Here, usually you should watch for when Facebook is ready and loaded
         $scope.$watch(function() {
             return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
@@ -25,6 +32,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage',
             });
         });
         $scope.posts = [];
+        $scope.fanpageURL = "NTUHATE";
         // From now on you can use the Facebook service just as Facebook api says
         // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
         $scope.login = function() {
@@ -32,10 +40,12 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage',
                 // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply
             });
         };
+        $scope.escapeStr = function(str) {
+            return str.replace(/\n/g, '<br>');
+        }
         $scope.load = function(addr) {
             if (!addr) {
-                console.log($scope.fanpageURL)
-                addr = $scope.fanpageURL + '/feed?limit=30';
+                addr = $scope.fanpageURL + '/feed?limit=250';
                 $scope.posts = [];
                 console.log("init posts");
             }
@@ -55,7 +65,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage',
                         });
                         $scope.load(response.paging.next);
                     } else {
-                        console.log($scope.posts);
+
                     }
                 }
             });
