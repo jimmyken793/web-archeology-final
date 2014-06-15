@@ -19,7 +19,10 @@
             <div class="row">
                 <div class="col-md-2">
                     <h5>看板ID：</h5>
-                    <input type="text" ng-model="fanpageURL">
+					<input type="radio" ng-model="boardType" value="select">選取現有
+					<select ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"></select><br>
+                    <input type="radio" ng-model="boardType" value="other" checked="true">其他
+                    <input type="text" ng-model="fanpageURL" ng-focus="boardType='other'"><br>
                     <input type="submit" value="載入" ng-click="load()">
                     <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
                     <h5>搜尋：</h5>

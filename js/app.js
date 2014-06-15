@@ -31,6 +31,10 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                 }
             });
         });
+        $scope.$storage = $localStorage.$default({
+            boards: []
+        });
+        $scope.boardType = "other";
         $scope.posts = [];
         $scope.fanpageURL = "NTUHATE";
         // From now on you can use the Facebook service just as Facebook api says
@@ -43,12 +47,8 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         $scope.escapeStr = function(str) {
             return str.replace(/\n/g, '<br>');
         }
-        $scope.load = function(addr) {
-            if (!addr) {
-                addr = $scope.fanpageURL + '/feed?limit=250';
-                $scope.posts = [];
-                console.log("init posts");
-            }
+        $scope.loadPage = function(addr) {
+
             FB.api(addr, function(response) {
                 if (!response || response.error) {
                     if (!response) {
@@ -63,12 +63,33 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                         $scope.$apply(function() {
                             $scope.posts = $scope.posts.concat(response.data);
                         });
-                        $scope.load(response.paging.next);
+                        $scope.loadPage(response.paging.next);
                     } else {
-
+                        $scope.loaded();
                     }
                 }
             });
+        };
+
+        $scope.load = function() {
+            if ($scope.boardType == "select") {
+                var addr = $scope.boardSelectId.name + '/feed?limit=250';
+                $scope.posts = [];
+                $scope.query = "";
+            } else {
+                var addr = $scope.fanpageURL + '/feed?limit=250';
+                $scope.posts = [];
+                $scope.query = "";
+                if ($scope.$storage.boards.filter(function(board) {
+                    return board.name === $scope.fanpageURL.toLowerCase()
+                }).length == 0) {
+                    $scope.$storage.boards.push({
+                        name: $scope.fanpageURL.toLowerCase()
+                    });
+                }
+                console.log("init posts");
+                $scope.loadPage(addr);
+            }
         }
         $scope.loaded = function() {
 
