@@ -63,14 +63,11 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         };
 
         $scope.load = function() {
+            var addr;
             if ($scope.boardType == "select") {
-                var addr = $scope.boardSelectId.name + '/feed?limit=250';
-                $scope.posts = [];
-                $scope.query = "";
+                addr = $scope.boardSelectId.name + '/feed?limit=250';
             } else {
-                var addr = $scope.fanpageURL + '/feed?limit=250';
-                $scope.posts = [];
-                $scope.query = "";
+                addr = $scope.fanpageURL + '/feed?limit=250';
                 if ($scope.$storage.boards.filter(function(board) {
                     return board.name === $scope.fanpageURL.toLowerCase()
                 }).length == 0) {
@@ -78,9 +75,11 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                         name: $scope.fanpageURL.toLowerCase()
                     });
                 }
-                console.log("init posts");
-                $scope.loadPage(addr);
             }
+            console.log("init posts");
+            $scope.posts = [];
+            $scope.query = "";
+            $scope.loadPage(addr);
         }
         $scope.loaded = function() {
 
