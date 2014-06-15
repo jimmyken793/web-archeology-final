@@ -23,7 +23,7 @@
 					<select ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"></select><br>
                     <input type="radio" ng-model="boardType" value="other" checked="true">其他
                     <input type="text" ng-model="fanpageURL" ng-focus="boardType='other'"><br>
-                    <input type="submit" value="載入" ng-click="load()">
+                    <input type="submit" value="載入" class="btn btn-sm btn-primary" ng-click="load()">
                     <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
                     <h5>搜尋：</h5>
                     <input ng-model="query">
