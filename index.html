@@ -12,11 +12,15 @@
         <script src="/bower_components/ngstorage/ngStorage.js"></script>
     </head>
     <body ng-controller="readerCtrl">
-        <div class="container">
+        <div class="container" ng-show="facebookReady">
             <div class="page-header">
                 <h1>Facebook Anonymous Board Searcher (FABS)</h1>
             </div>
-            <div class="row">
+	    	<div class="row"  ng-hide="loggedIn">
+	    		<h2>本程式需要Facebook權限方可使用：</h2>
+	            <input type="submit" value="Facebook授權" class="btn btn-sm btn-primary" ng-click="login()">
+	    	</div>
+            <div class="row" ng-show="loggedIn">
                 <div class="col-md-2">
                     <h5>看板ID：</h5>
 					<input type="radio" ng-model="boardType" value="select">選取現有

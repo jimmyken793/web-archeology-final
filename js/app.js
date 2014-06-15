@@ -15,28 +15,20 @@ app.filter("nl2br", function($filter) {
 
 app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize',
     function($scope, Facebook, $localStorage, $sanitize) {
+        $scope.facebookReady = false;
         // Here, usually you should watch for when Facebook is ready and loaded
         $scope.$watch(function() {
             return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
         }, function(newVal) {
             $scope.facebookReady = true; // You might want to use this to disable/show/hide buttons and else
-            Facebook.getLoginStatus(function(response) {
-                if (response.status === 'connected') {
-                    var uid = response.authResponse.userID;
-                    var accessToken = response.authResponse.accessToken;
-                } else if (response.status === 'not_authorized') {
-                    $scope.login();
-                } else {
-                    $scope.login();
-                }
-            });
+            $scope.getLoginStatus();
         });
         $scope.$storage = $localStorage.$default({
             boards: []
         });
         $scope.boardType = "other";
         $scope.posts = [];
-        $scope.fanpageURL = "NTUHATE";
+        $scope.fanpageURL = "ntuhate";
         // From now on you can use the Facebook service just as Facebook api says
         // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
         $scope.login = function() {
@@ -48,7 +40,6 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
             return str.replace(/\n/g, '<br>');
         }
         $scope.loadPage = function(addr) {
-
             FB.api(addr, function(response) {
                 if (!response || response.error) {
                     if (!response) {
@@ -105,15 +96,6 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                         $scope.loggedIn = false;
                     });
                 }
-            });
-        };
-
-        $scope.me = function() {
-            Facebook.api('/me', function(response) {
-                $scope.$apply(function() {
-                    // Here you could re-check for user status (just in case)
-                    $scope.user = response;
-                });
             });
         };
     }
