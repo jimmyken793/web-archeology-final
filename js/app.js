@@ -20,7 +20,6 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         $scope.$watch(function() {
             return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
         }, function(newVal) {
-            $scope.facebookReady = true; // You might want to use this to disable/show/hide buttons and else
             $scope.getLoginStatus();
         });
         $scope.$storage = $localStorage.$default({
@@ -95,6 +94,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                         $scope.loggedIn = false;
                     });
                 }
+                $scope.facebookReady = true;
             });
         };
     }

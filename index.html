@@ -12,35 +12,74 @@
         <script src="/bower_components/ngstorage/ngStorage.js"></script>
     </head>
     <body ng-controller="readerCtrl">
-        <div class="container" ng-show="facebookReady">
-            <div class="page-header">
-                <h1>Facebook Anonymous Board Searcher (FABS)</h1>
-            </div>
-	    	<div class="row"  ng-hide="loggedIn">
-	    		<h2>本程式需要Facebook權限方可使用：</h2>
-	            <input type="submit" value="Facebook授權" class="btn btn-sm btn-primary" ng-click="login()">
-	    	</div>
-            <div class="row" ng-show="loggedIn">
-                <div class="col-md-2">
-                    <h5>看板ID：</h5>
-					<input type="radio" ng-model="boardType" value="select">選取現有
-					<select ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"></select><br>
-                    <input type="radio" ng-model="boardType" value="other" checked="true">其他
-                    <input type="text" ng-model="fanpageURL" ng-focus="boardType='other'"><br>
-                    <input type="submit" value="載入" class="btn btn-sm btn-primary" ng-click="load()">
-                    <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
-                    <h5>搜尋：</h5>
-                    <input ng-model="query">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">FABS</a>
+
+                <div class="col-xs-5 col-sm-3 pull-right">
                 </div>
-                <div class="col-md-10">
-                    <table class="table table-striped">
-                        <tr ng-repeat="post in posts | filter: { message:query }:strict">
-                            <td ng-bind-html="post.message | nl2br"></td>
-                            <td>
-                                <a href="https://www.facebook.com/{{post.id}}">原文</a>
-                            </td>
-                        </tr>
-                    </table>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div class="col-md-4">
+                    <form class="navbar-form" role="search" method="get" id="search-form" name="search-form">   
+                        <div class="input-group">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-hide="!facebookReady || loggedIn">
+            <div id="sidebar" class="sidebar-offcanvas">
+                <div class="col-md-12">
+                </div>
+            </div>
+            <div id="main">
+                <div class="col-md-12">
+                    <h1>Facebook Anonymous Board Searcher (FABS)</h1>
+                    <h2>本程式需要Facebook權限方可使用：</h2>
+                    <input type="submit" value="Facebook授權" class="btn btn-sm btn-primary" ng-click="login()">
+                </div>
+            </div>
+        </div>
+        <div class="row-offcanvas row-offcanvas-left" ng-hide="!facebookReady || !loggedIn">
+            <div id="sidebar" class="sidebar-offcanvas">
+                <div class="col-md-12">
+                    <h5>看板ID：</h5>
+                    <input type="radio" ng-model="boardType" value="select"><label for="boardSelectId">選取現有</label>
+                    <select id="boardSelectId" ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"></select><br>
+                    <input type="radio" ng-model="boardType" value="other" checked="true"><label for="fanpageURL">其他</label>
+                    <input type="text" ng-model="fanpageURL" id="fanpageURL" ng-focus="boardType='other'" size="18"><br>
+                    <input type="submit" value="載入" class="btn btn-sm btn-primary pull-right" ng-click="load()">
+                    <small>www.facebook.com/NTUHATE => input "NTUHATE"</small>
+                </div>
+                <div class="col-md-12">
+                    <label for="query">搜尋</label>
+                    <input ng-model="query" id="query" size="14">
+                    <button type="button" class="btn btn-default btn-sm" ng-click="query=''">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <div id="main">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Facebook Anonymous Board Searcher (FABS)</h1>
+                            <table class="table table-striped">
+                                <tr ng-repeat="post in posts | filter: { message:query }:strict">
+                                    <td ng-bind-html="post.message | nl2br"></td>
+                                    <td>
+                                        <a href="https://www.facebook.com/{{post.id}}">原文</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
