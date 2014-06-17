@@ -1,0 +1,42 @@
+{
+  "name": "angular-facebook-api",
+  "homepage": "https://github.com/joonhocho/angular-facebook-api",
+  "authors": [
+    "Joon Ho Cho <joonho1101@gmail.com>"
+  ],
+  "description": "A Facebook SDK wrapper service for Angular.js",
+  "main": "src/angular-facebook-api.js",
+  "keywords": [
+    "facebook",
+    "sdk",
+    "angular.js",
+    "javascript",
+    "wrapper",
+    "service"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "coverage",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.12"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.12"
+  },
+  "_release": "7ec0cc1a43",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7ec0cc1a43225942029ac11b59bbec1fb37bfe6c"
+  },
+  "_source": "git://github.com/joonho1101/angular-facebook.git",
+  "_target": "*",
+  "_originalSource": "angular-facebook-api",
+  "_direct": true
+}
