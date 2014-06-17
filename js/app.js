@@ -75,7 +75,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                 if ($scope.fanpageURL.length == 0) {
                     return;
                 }
-                addr = $scope.fanpageURL + '/feed?limit=50';
+                addr = $scope.fanpageURL + '/feed?limit=250';
                 if ($scope.$storage.boards.filter(function(board) {
                     return board.name === $scope.fanpageURL.toLowerCase()
                 }).length == 0) {
