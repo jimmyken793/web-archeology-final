@@ -2,7 +2,7 @@ var app = angular.module('FanPageReader', ['facebook', 'ngStorage', 'ngSanitize'
 
 app.config(['FacebookProvider',
     function(FacebookProvider) {
-        FacebookProvider.init('320156364807880');
+        FacebookProvider.init('320156138141236');
     }
 ])
 
