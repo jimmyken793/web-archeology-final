@@ -1,4 +1,4 @@
-var app = angular.module('FanPageReader', ['facebook', 'ngStorage', 'ngSanitize']); // inject facebook module
+var app = angular.module('FanPageReader', ['facebook', 'ngStorage', 'ngSanitize', 'angularSpinner']); // inject facebook module
 
 app.config(['FacebookProvider',
     function(FacebookProvider) {
@@ -16,9 +16,8 @@ app.filter("nl2br", function($filter) {
 app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize',
     function($scope, Facebook, $localStorage, $sanitize) {
         $scope.facebookReady = false;
-        // Here, usually you should watch for when Facebook is ready and loaded
         $scope.$watch(function() {
-            return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
+            return Facebook.isReady();
         }, function(newVal) {
             $scope.getLoginStatus();
         });
@@ -28,16 +27,11 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         $scope.boardType = "other";
         $scope.posts = [];
         $scope.fanpageURL = "ntuhate";
-        // From now on you can use the Facebook service just as Facebook api says
-        // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
         $scope.login = function() {
             Facebook.login(function(response) {
-                // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply
+                $scope.getLoginStatus();
             });
         };
-        $scope.escapeStr = function(str) {
-            return str.replace(/\n/g, '<br>');
-        }
         $scope.loadPage = function(addr) {
             FB.api(addr, function(response) {
                 if (!response || response.error) {
@@ -78,10 +72,11 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
             console.log("init posts");
             $scope.posts = [];
             $scope.query = "";
+            $scope.loading = true;
             $scope.loadPage(addr);
         }
         $scope.loaded = function() {
-
+            $scope.loading = false;
         }
         $scope.getLoginStatus = function() {
             Facebook.getLoginStatus(function(response) {
@@ -99,3 +94,4 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         };
     }
 ]);
+Ladda.bind('button');

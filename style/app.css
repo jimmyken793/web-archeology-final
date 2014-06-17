@@ -22,6 +22,12 @@ body {
   overflow:auto;
 }
 
+#loading_spinner{
+  position:relative;
+  top:18px;
+  left:70px;
+}
+
 /*
  * off Canvas sidebar
  * --------------------------------------------------
