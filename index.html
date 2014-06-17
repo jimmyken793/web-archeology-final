@@ -79,6 +79,7 @@
                             <table class="table table-striped">
                                 <tr ng-repeat="post in posts | filter: { message:query }:strict">
                                     <td ng-bind-html="post.message | nl2br"></td>
+                                    <td><img ng-if="post.picture &amp;&amp;post.type=='photo'" src="{{post.picture}}"></td>
                                     <td>
                                         <a href="https://www.facebook.com/{{post.id}}">原文</a>
                                     </td>

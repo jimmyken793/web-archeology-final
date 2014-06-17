@@ -60,7 +60,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
             if ($scope.boardType == "select") {
                 addr = $scope.boardSelectId.name + '/feed?limit=250';
             } else {
-                addr = $scope.fanpageURL + '/feed?limit=250';
+                addr = $scope.fanpageURL + '/feed?limit=50';
                 if ($scope.$storage.boards.filter(function(board) {
                     return board.name === $scope.fanpageURL.toLowerCase()
                 }).length == 0) {
