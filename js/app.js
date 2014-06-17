@@ -37,8 +37,11 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                 $scope.getLoginStatus();
             });
         };
-        $scope.loadPage = function(addr) {
+        $scope.loadPage = function(addr, boardname) {
             FB.api(addr, function(response) {
+                if ($scope.boardname != boardname) {
+                    return;
+                }
                 if (!response || response.error) {
                     if (!response) {
                         console.log('Error occured');
@@ -59,7 +62,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                 }
             });
         };
-
+        $scope.boardname = "";
         $scope.load = function() {
             var addr;
             if ($scope.boardType == "select") {
@@ -67,6 +70,7 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                     return;
                 }
                 addr = $scope.boardSelectId.name + '/feed?limit=250';
+                $scope.boardname = $scope.boardSelectId.name;
             } else {
                 if ($scope.fanpageURL.length == 0) {
                     return;
@@ -79,12 +83,13 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
                         name: $scope.fanpageURL.toLowerCase()
                     });
                 }
+                $scope.boardname = $scope.fanpageURL;
             }
             console.log("init posts");
             $scope.posts = [];
             $scope.query = "";
             $scope.loading = true;
-            $scope.loadPage(addr);
+            $scope.loadPage(addr, $scope.boardname);
         }
         $scope.loaded = function() {
             $scope.loading = false;
