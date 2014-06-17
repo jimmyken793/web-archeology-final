@@ -24,9 +24,14 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         $scope.$storage = $localStorage.$default({
             boards: []
         });
-        $scope.boardType = "other";
+        if ($scope.$storage.boards.length == 0) {
+            $scope.boardType = "other";
+            $scope.fanpageURL = "ntuhate";
+        } else {
+            $scope.boardType = "select";
+            $scope.fanpageURL = "";
+        }
         $scope.posts = [];
-        $scope.fanpageURL = "ntuhate";
         $scope.login = function() {
             Facebook.login(function(response) {
                 $scope.getLoginStatus();
@@ -58,8 +63,14 @@ app.controller('readerCtrl', ['$scope', 'Facebook', '$localStorage', '$sanitize'
         $scope.load = function() {
             var addr;
             if ($scope.boardType == "select") {
+                if (!$scope.boardSelectId) {
+                    return;
+                }
                 addr = $scope.boardSelectId.name + '/feed?limit=250';
             } else {
+                if ($scope.fanpageURL.length == 0) {
+                    return;
+                }
                 addr = $scope.fanpageURL + '/feed?limit=50';
                 if ($scope.$storage.boards.filter(function(board) {
                     return board.name === $scope.fanpageURL.toLowerCase()

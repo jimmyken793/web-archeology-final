@@ -55,8 +55,8 @@
             <div id="sidebar" class="sidebar-offcanvas">
                 <div class="col-md-12">
                     <h5>看板ID：</h5>
-                    <input type="radio" ng-model="boardType" value="select"><label for="boardSelectId">選取現有</label>
-                    <select id="boardSelectId" ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"></select><br>
+                    <input type="radio" ng-model="boardType" value="select">
+                    <select id="boardSelectId" ng-model="boardSelectId" ng-options="board.name for board in $storage.boards" ng-focus="boardType='select'"><option value="">-- 選取看板 --</option></select><br>
                     <input type="radio" ng-model="boardType" value="other" checked="true"><label for="fanpageURL">其他</label>
                     <input type="text" ng-model="fanpageURL" id="fanpageURL" ng-focus="boardType='other'" size="18"><br>
                     <span id="loading_spinner" us-spinner="{radius:5, width:4, length: 4, speed:1.6}" ng-show="loading"></span>
